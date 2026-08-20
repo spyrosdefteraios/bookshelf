@@ -1,0 +1,30 @@
+services:
+  mongodb:
+    image: mongo:7
+    container_name: bookshelf-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=bookshelf_mongo_2024
+    volumes:
+      - mongo_data:/data/db
+
+  api:
+    build: ./backend
+    container_name: bookshelf-api
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - MONGO_URI=mongodb://admin:bookshelf_mongo_2024@mongodb:27017/bookshelf?authSource=admin
+      - JWT_SECRET=bookshelf_super_secret_key_2024
+      - JWT_EXPIRES_IN=7d
+      - CORS_ORIGIN=*
+      - USE_MONGO=true
+    depends_on:
+      - mongodb
+
+volumes:
+  mongo_data:
