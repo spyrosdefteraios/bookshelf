@@ -1,0 +1,77 @@
+<div class="min-h-screen flex">
+  <!-- Left side - Image -->
+  <div class="hidden lg:flex lg:w-1/2 relative bg-indigo-600">
+    <img 
+      src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800"
+      alt="Library" 
+      class="absolute inset-0 w-full h-full object-cover opacity-40"
+    />
+    <div class="relative z-10 flex flex-col justify-center px-12 text-white">
+      <h1 class="text-5xl font-bold mb-4">📚 BookShelf</h1>
+      <p class="text-xl opacity-90">Your personal library manager</p>
+      <p class="mt-4 opacity-75">Track your reading journey, discover new books, and share your thoughts.</p>
+    </div>
+  </div>
+
+  <!-- Right side - Form -->
+  <div class="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white">
+    <div class="w-full max-w-md">
+      <div class="lg:hidden text-center mb-8">
+        <h1 class="text-3xl font-bold text-indigo-600">📚 BookShelf</h1>
+      </div>
+
+      <h2 class="text-3xl font-bold text-gray-800 mb-2">Welcome back!</h2>
+      <p class="text-gray-500 mb-8">Sign in to your account</p>
+
+      <div *ngIf="error" class="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
+        <i class="fas fa-exclamation-circle"></i>
+        {{ error }}
+      </div>
+
+      <form (ngSubmit)="onSubmit()">
+        <div class="mb-5">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Email address</label>
+          <div class="relative">
+            <i class="fas fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <input
+              type="email"
+              [(ngModel)]="email"
+              name="email"
+              placeholder="you@example.com"
+              required
+              class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            />
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+          <div class="relative">
+            <i class="fas fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <input
+              type="password"
+              [(ngModel)]="password"
+              name="password"
+              placeholder="••••••••"
+              required
+              class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            />
+          </div>
+        </div>
+
+        <button 
+          type="submit" 
+          [disabled]="loading"
+          class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold rounded-lg transition duration-200 flex items-center justify-center gap-2">
+          <i *ngIf="loading" class="fas fa-spinner fa-spin"></i>
+          {{ loading ? 'Signing in...' : 'Sign In' }}
+        </button>
+      </form>
+
+      <p class="text-center mt-6 text-gray-500">
+        Don't have an account? 
+        <a routerLink="/register" class="text-indigo-600 font-semibold hover:underline">Register here</a>
+      </p>
+    </div>
+  </div>
+</div>

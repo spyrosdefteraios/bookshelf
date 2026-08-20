@@ -1,0 +1,73 @@
+<nav class="bg-white shadow-sm border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16">
+      
+      <!-- Logo -->
+      <div class="flex items-center">
+        <a routerLink="/dashboard" class="flex items-center gap-2">
+          <span class="text-2xl">📚</span>
+          <span class="text-xl font-bold text-indigo-600">BookShelf</span>
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center gap-6">
+        <a routerLink="/dashboard" 
+           routerLinkActive="text-indigo-600 font-semibold"
+           class="text-gray-600 hover:text-indigo-600 transition flex items-center gap-1">
+          <i class="fas fa-home"></i> Dashboard
+        </a>
+        <a routerLink="/books"
+           routerLinkActive="text-indigo-600 font-semibold"
+           class="text-gray-600 hover:text-indigo-600 transition flex items-center gap-1">
+          <i class="fas fa-book"></i> My Books
+        </a>
+        <a *ngIf="authService.isAdmin()"
+           routerLink="/admin"
+           routerLinkActive="text-indigo-600 font-semibold"
+           class="text-gray-600 hover:text-indigo-600 transition flex items-center gap-1">
+          <i class="fas fa-shield-alt"></i> Admin
+        </a>
+      </div>
+
+      <!-- User Menu -->
+      <div class="hidden md:flex items-center gap-4">
+        <a routerLink="/profile" class="flex items-center gap-2 text-gray-600 hover:text-indigo-600 transition">
+          <i class="fas fa-user-circle text-xl"></i>
+          <span class="font-medium">{{ authService.currentUser()?.name }}</span>
+        </a>
+        <button (click)="logout()" 
+                class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+
+      <!-- Mobile menu button -->
+      <div class="md:hidden flex items-center">
+        <button (click)="toggleMenu()" class="text-gray-600 hover:text-indigo-600">
+          <i class="fas" [class.fa-bars]="!menuOpen" [class.fa-times]="menuOpen" style="font-size: 1.5rem"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div *ngIf="menuOpen" class="md:hidden bg-white border-t border-gray-200 px-4 py-3 space-y-3">
+    <a routerLink="/dashboard" (click)="menuOpen=false" class="block text-gray-600 hover:text-indigo-600 py-2">
+      <i class="fas fa-home mr-2"></i> Dashboard
+    </a>
+    <a routerLink="/books" (click)="menuOpen=false" class="block text-gray-600 hover:text-indigo-600 py-2">
+      <i class="fas fa-book mr-2"></i> My Books
+    </a>
+    <a *ngIf="authService.isAdmin()" routerLink="/admin" (click)="menuOpen=false" class="block text-gray-600 hover:text-indigo-600 py-2">
+      <i class="fas fa-shield-alt mr-2"></i> Admin
+    </a>
+    <a routerLink="/profile" (click)="menuOpen=false" class="block text-gray-600 hover:text-indigo-600 py-2">
+      <i class="fas fa-user mr-2"></i> Profile
+    </a>
+    <button (click)="logout()" class="w-full text-left text-red-600 hover:text-red-700 py-2">
+      <i class="fas fa-sign-out-alt mr-2"></i> Logout
+    </button>
+  </div>
+</nav>

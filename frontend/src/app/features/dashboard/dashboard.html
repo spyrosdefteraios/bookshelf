@@ -1,0 +1,104 @@
+<div class="min-h-screen bg-gray-50">
+
+  <!-- Header -->
+  <div class="bg-white border-b border-gray-200 px-8 py-6">
+    <h1 class="text-2xl font-bold text-gray-800">
+      Welcome back, {{ authService.currentUser()?.name }}! 👋
+    </h1>
+    <p class="text-gray-500 mt-1">Here's your reading overview</p>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-8 py-8">
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-500 text-sm">Total Books</p>
+            <p class="text-3xl font-bold text-gray-800 mt-1">{{ stats?.total || 0 }}</p>
+          </div>
+          <div class="bg-indigo-100 p-3 rounded-lg">
+            <i class="fas fa-books text-indigo-600 text-xl"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-500 text-sm">Reading</p>
+            <p class="text-3xl font-bold text-blue-600 mt-1">{{ stats?.reading || 0 }}</p>
+          </div>
+          <div class="bg-blue-100 p-3 rounded-lg">
+            <i class="fas fa-book-open text-blue-600 text-xl"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-500 text-sm">Read</p>
+            <p class="text-3xl font-bold text-green-600 mt-1">{{ stats?.read || 0 }}</p>
+          </div>
+          <div class="bg-green-100 p-3 rounded-lg">
+            <i class="fas fa-check-circle text-green-600 text-xl"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-500 text-sm">Wishlist</p>
+            <p class="text-3xl font-bold text-yellow-600 mt-1">{{ stats?.wishlist || 0 }}</p>
+          </div>
+          <div class="bg-yellow-100 p-3 rounded-lg">
+            <i class="fas fa-bookmark text-yellow-600 text-xl"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Books -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-bold text-gray-800">Recent Books</h2>
+        <a routerLink="/books" class="text-indigo-600 hover:underline text-sm font-medium">
+          View all →
+        </a>
+      </div>
+
+      <div *ngIf="recentBooks.length === 0" class="text-center py-12 text-gray-400">
+        <i class="fas fa-book text-5xl mb-4"></i>
+        <p class="text-lg">No books yet!</p>
+        <a routerLink="/books" class="mt-4 inline-block bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+          Add your first book
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div *ngFor="let book of recentBooks"
+             class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition cursor-pointer"
+             [routerLink]="['/books', book.id]">
+          <div class="bg-indigo-100 rounded-lg p-4 mb-3 text-center">
+            <i class="fas fa-book text-indigo-600 text-3xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 truncate">{{ book.title }}</h3>
+          <p class="text-gray-500 text-sm truncate">{{ book.author }}</p>
+          <span class="inline-block mt-2 px-2 py-1 rounded-full text-xs font-medium"
+                [class.bg-blue-100]="book.status === 'reading'"
+                [class.text-blue-700]="book.status === 'reading'"
+                [class.bg-green-100]="book.status === 'read'"
+                [class.text-green-700]="book.status === 'read'"
+                [class.bg-yellow-100]="book.status === 'wishlist'"
+                [class.text-yellow-700]="book.status === 'wishlist'">
+            {{ book.status }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

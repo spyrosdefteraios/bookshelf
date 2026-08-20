@@ -1,0 +1,70 @@
+<div class="min-h-screen bg-gray-50">
+
+  <!-- Header -->
+  <div class="bg-white border-b border-gray-200 px-8 py-6">
+    <h1 class="text-2xl font-bold text-gray-800">My Profile</h1>
+    <p class="text-gray-500 mt-1">Manage your account</p>
+  </div>
+
+  <div class="max-w-2xl mx-auto px-8 py-8">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+
+      <!-- Avatar -->
+      <div class="flex flex-col items-center mb-8">
+        <div class="bg-indigo-100 rounded-full w-24 h-24 flex items-center justify-center mb-4">
+          <i class="fas fa-user text-indigo-600 text-4xl"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-800">{{ authService.currentUser()?.name }}</h2>
+        <span class="mt-2 px-3 py-1 rounded-full text-sm font-medium"
+              [class.bg-purple-100]="authService.isAdmin()"
+              [class.text-purple-700]="authService.isAdmin()"
+              [class.bg-indigo-100]="!authService.isAdmin()"
+              [class.text-indigo-700]="!authService.isAdmin()">
+          {{ authService.isAdmin() ? '👑 Admin' : '👤 User' }}
+        </span>
+      </div>
+
+      <!-- Info -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+          <i class="fas fa-user text-indigo-600 w-5"></i>
+          <div>
+            <p class="text-sm text-gray-500">Full Name</p>
+            <p class="font-medium text-gray-800">{{ authService.currentUser()?.name }}</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+          <i class="fas fa-envelope text-indigo-600 w-5"></i>
+          <div>
+            <p class="text-sm text-gray-500">Email</p>
+            <p class="font-medium text-gray-800">{{ authService.currentUser()?.email }}</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+          <i class="fas fa-shield-alt text-indigo-600 w-5"></i>
+          <div>
+            <p class="text-sm text-gray-500">Role</p>
+            <p class="font-medium text-gray-800">{{ authService.currentUser()?.role }}</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+          <i class="fas fa-calendar text-indigo-600 w-5"></i>
+          <div>
+            <p class="text-sm text-gray-500">Member since</p>
+            <p class="font-medium text-gray-800">{{ authService.currentUser()?.createdAt | date:'longDate' }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logout -->
+      <button (click)="logout()"
+              class="mt-8 w-full bg-red-50 hover:bg-red-100 text-red-600 py-3 rounded-lg font-medium transition flex items-center justify-center gap-2">
+        <i class="fas fa-sign-out-alt"></i>
+        Logout
+      </button>
+    </div>
+  </div>
+</div>
